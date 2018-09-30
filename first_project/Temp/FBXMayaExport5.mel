@@ -1,0 +1,22 @@
+print "Starting maya loading and fbx conversion \n";
+	
+if (`file -q -exists "E:/Users/Kibrael Roell/unity_practice/first_project/Assets/Pikachu2.ma"`)
+{		
+	file -o "E:/Users/Kibrael Roell/unity_practice/first_project/Assets/Pikachu2.ma";
+	FBXExportEmbeddedTextures -v false;
+	// FBXExportHardEdges -v true;
+	FBXExportApplyConstantKeyReducer -v false;
+	FBXExportShowUI -v false;
+
+	print "Before fbx export\n";
+	FBXExport -f "E:/Users/Kibrael Roell/unity_practice/first_project/Temp/ExportedFBXFile.fbx";
+	print "after fbx export\n";
+}
+else
+	print "Could not open Maya file.";
+
+sysFile -delete "E:/Users/Kibrael Roell/unity_practice/first_project/Temp/CommandPipe";
+
+$donepipeKill = `fopen "E:/Users/Kibrael Roell/unity_practice/first_project/Temp/SyncPipeKill" "w"`;
+fwrite $donepipeKill "Done";
+fclose $donepipeKill;
